@@ -25,7 +25,16 @@ class MyApp extends StatelessWidget {
         // primaryColor: Colors.blue,
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Guide'),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('QUIZmania'),
+        ),
+        body: Column(),
+        bottomNavigationBar: BottomAppBar(
+          clipBehavior: Clip.none,
+          child: MyFooter(),
+        ),
+      ),
     );
   }
 }
@@ -122,86 +131,6 @@ class MyFooter extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void _resetCounter() {
-    setState(() {
-      _counter = 0;
-    });
-  }
-
-  void vibrate() async {
-    if (await Vibration.hasVibrator()) {
-      Vibration.vibrate(duration: 250);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // build() returns a so-called "widget tree" which tells Flutter what to draw onto the screen
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Text(
-                "You have clicked add button this many times: ${_counter > 10 ? ' (Stop please!)' : ''}",
-              ),
-              RichText(
-                text: TextSpan(
-                  text: '$_counter',
-                  style: TextStyle(
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.blueGrey[200],
-                    height: 1.0,
-                  ),
-                  recognizer: LongPressGestureRecognizer()
-                    ..onLongPress = () {
-                      vibrate();
-                      _resetCounter();
-                    },
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        clipBehavior: Clip.none,
-        child: MyFooter(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-        highlightElevation: 2.0,
       ),
     );
   }
