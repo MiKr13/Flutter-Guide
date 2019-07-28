@@ -9,7 +9,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // build() returns a so-called "widget tree" which tells Flutter what to draw onto the screen
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -127,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // build() returns a so-called "widget tree" which tells Flutter what to draw onto the screen
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -142,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Text(
-                    'You have pushed the button this many times:',
+                    "You have clicked add button this many times: ${_counter > 10 ? ' (Stop please!)' : ''}",
                   ),
                   RichText(
                     text: TextSpan(
