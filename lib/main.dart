@@ -97,9 +97,26 @@ class MyFooter extends StatelessWidget {
           },
           child: Container(
             child: ListTile(
-              leading: Icon(Icons.code),
+              // leading: FlatButton(
+              //   child: Icon(Icons.arrow_back),
+              //   onPressed: () {
+              //     Navigator.of(context).pop();
+              //   },
+              // ),
               title: Text('Flutter Guide'),
               subtitle: Text('This is created to learn flutter ASAP'),
+              // trailing: Icon(Icons.code),
+              trailing: FlatButton(
+                child: Icon(Icons.code),
+                onPressed: () async {
+                  const url = 'https://github.com/MiKr13/Flutter-Guide.git';
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
+              ),
             ),
           ),
         ),
@@ -127,49 +144,46 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) { // build() returns a so-called "widget tree" which tells Flutter what to draw onto the screen
+  Widget build(BuildContext context) {
+    // build() returns a so-called "widget tree" which tells Flutter what to draw onto the screen
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Text(
-                    "You have clicked add button this many times: ${_counter > 10 ? ' (Stop please!)' : ''}",
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      text: '$_counter',
-                      style: TextStyle(
-                        fontSize: 32.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.blueGrey[200],
-                        height: 1.0,
-                      ),
-                    ),
-                  )
-                ],
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Text(
+                "You have clicked add button this many times: ${_counter > 10 ? ' (Stop please!)' : ''}",
               ),
-            ),
-            Container(
-              child: MyFooter(),
-            )
-          ],
+              RichText(
+                text: TextSpan(
+                  text: '$_counter',
+                  style: TextStyle(
+                    fontSize: 32.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.blueGrey[200],
+                    height: 1.0,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        clipBehavior: Clip.none,
+        child: MyFooter(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
         highlightElevation: 2.0,
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
