@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vibration/vibration.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,15 +13,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
+        // brightness: Brightness.light, // to enable dark theme by default instead of battery saver mode only
+        brightness: Brightness.dark,
+        // primaryColor: Colors.blue,
+        primarySwatch: Colors.blue,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        // primaryColor: Colors.blue,
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Guide'),
@@ -29,7 +29,14 @@ class MyApp extends StatelessWidget {
 }
 
 class MyFooter extends StatelessWidget {
+  // NOTE using 'new' keyword or not before every Widget class instantiation depends on us!
   const MyFooter({Key key}) : super(key: key);
+
+  void vibrate() async {
+    if (await Vibration.hasVibrator()) {
+      Vibration.vibrate(duration: 50);
+    }
+  }
 
   Future<void> _support(BuildContext context) async {
     return showDialog<void>(
@@ -42,11 +49,11 @@ class MyFooter extends StatelessWidget {
             child: ListTile(
               leading: Icon(Icons.sentiment_very_satisfied),
               title: Text('Developed by: Mihir Kumar'),
-              subtitle: new RichText(
-                text: new TextSpan(
-                  text: 'Support me at Github',
-                  style: new TextStyle(color: Colors.blue),
-                  recognizer: new TapGestureRecognizer()
+              subtitle: RichText(
+                text: TextSpan(
+                  text: 'View other projects @Github',
+                  style: TextStyle(color: Colors.blue),
+                  recognizer: TapGestureRecognizer()
                     ..onTap = () async {
                       const url = 'https://github.com/MiKr13/';
                       if (await canLaunch(url)) {
@@ -61,7 +68,12 @@ class MyFooter extends StatelessWidget {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Okay!'),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.arrow_back),
+                  Text(' Go Back'),
+                ],
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -75,22 +87,24 @@ class MyFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Card(
-      color: Color.fromRGBO(30, 144, 255, 0.1),
-      child: InkWell(
-        splashColor: Colors.black.withAlpha(20),
-        onLongPress: () {
-          _support(context);
-        },
-        child: Container(
-          child: ListTile(
-            leading: Icon(Icons.code),
-            title: Text('Flutter Guide'),
-            subtitle: Text('This is created to learn flutter ASAP'),
+      child: Card(
+        color: Color.fromRGBO(30, 144, 255, 0.1),
+        child: InkWell(
+          splashColor: Colors.black.withAlpha(20),
+          onLongPress: () {
+            vibrate();
+            _support(context);
+          },
+          child: Container(
+            child: ListTile(
+              leading: Icon(Icons.code),
+              title: Text('Flutter Guide'),
+              subtitle: Text('This is created to learn flutter ASAP'),
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 }
 
@@ -124,17 +138,25 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Expanded(
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Text(
-                      'You have pushed the button this many times:',
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Text(
+                    'You have pushed the button this many times:',
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: '$_counter',
+                      style: TextStyle(
+                        fontSize: 32.0,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.blueGrey[200],
+                        height: 1.0,
+                      ),
                     ),
-                    Text(
-                      '$_counter',
-                      style: Theme.of(context).textTheme.display1,
-                    ),
-                  ]),
+                  )
+                ],
+              ),
             ),
             Container(
               child: MyFooter(),
@@ -146,6 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
+        highlightElevation: 2.0,
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
