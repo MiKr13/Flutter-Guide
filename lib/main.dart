@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/services.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
@@ -9,7 +10,8 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) { // build() returns a so-called "widget tree" which tells Flutter what to draw onto the screen
+  Widget build(BuildContext context) {
+    // build() returns a so-called "widget tree" which tells Flutter what to draw onto the screen
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -107,7 +109,7 @@ class MyFooter extends StatelessWidget {
               subtitle: Text('This is created to learn flutter ASAP'),
               // trailing: Icon(Icons.code),
               trailing: FlatButton(
-                child: Icon(Icons.code),
+                child: Icon(Icons.developer_mode),
                 onPressed: () async {
                   const url = 'https://github.com/MiKr13/Flutter-Guide.git';
                   if (await canLaunch(url)) {
@@ -143,6 +145,18 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
+  void vibrate() async {
+    if (await Vibration.hasVibrator()) {
+      Vibration.vibrate(duration: 250);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // build() returns a so-called "widget tree" which tells Flutter what to draw onto the screen
@@ -163,11 +177,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 text: TextSpan(
                   text: '$_counter',
                   style: TextStyle(
-                    fontSize: 32.0,
+                    fontSize: 40.0,
                     fontWeight: FontWeight.w600,
                     color: Colors.blueGrey[200],
                     height: 1.0,
                   ),
+                  recognizer: LongPressGestureRecognizer()
+                    ..onLongPress = () {
+                      vibrate();
+                      _resetCounter();
+                    },
                 ),
               )
             ],

@@ -1,6 +1,6 @@
 # flutter_guide
 
-A new Flutter project.
+A Flutter project to play around with different kinds of widgets and themes.
 
 ## Getting Started
 
