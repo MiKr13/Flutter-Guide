@@ -7,8 +7,30 @@ import 'package:vibration/vibration.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final List<String> questions = [
+    "What is the number of states in India",
+    "Which is the first state to be formed on the basis of language?",
+    "Which state was divided into Maharashtra and Gujarat in 1960?",
+    "Which city was the summer capital of India during British Rule?"
+  ];
+
+  var _index = 0;
+  void _changeQuestion() {
+    setState(() {
+      if (_index == questions.length - 1) {
+        _index = 0;
+      } else {
+        _index++;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // build() returns a so-called "widget tree" which tells Flutter what to draw onto the screen
@@ -29,7 +51,53 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('QUIZmania'),
         ),
-        body: Column(),
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              margin: EdgeInsets.fromLTRB(5, 0, 5, 10),
+              child: RichText(
+                text: TextSpan(
+                  text: 'The Questions!',
+                  style: TextStyle(
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.blueGrey[200],
+                    height: 1.0,
+                  ),
+                ),
+              ),
+            ),
+            Card(
+              elevation: 15.0,
+              color: Colors.blueGrey[400],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(questions[_index]),
+                  RaisedButton(
+                    child: Text('14'),
+                    onPressed: _changeQuestion,
+                  ),
+                  RaisedButton(
+                    child: Text('27'),
+                    onPressed: null,
+                  ),
+                  RaisedButton(
+                    child: Text('29'),
+                    onPressed: null,
+                  ),
+                  RaisedButton(
+                    child: Text('None of the above'),
+                    onPressed: null,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
         bottomNavigationBar: BottomAppBar(
           clipBehavior: Clip.none,
           child: MyFooter(),
@@ -114,8 +182,8 @@ class MyFooter extends StatelessWidget {
               //     Navigator.of(context).pop();
               //   },
               // ),
-              title: Text('Flutter Guide'),
-              subtitle: Text('This is created to learn flutter ASAP'),
+              title: Text('Flutter Quiz App'),
+              subtitle: Text('This is created to learn Flutter layout & maps'),
               // trailing: Icon(Icons.code),
               trailing: FlatButton(
                 child: Icon(Icons.developer_mode),
