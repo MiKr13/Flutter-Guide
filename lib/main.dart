@@ -5,6 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
 
+import 'package:flutter_guide/Stateless/title.dart' as title;
+import 'package:flutter_guide/Stateless/question.dart' as question;
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -13,8 +16,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final List<String> questions = [
-    "What is the number of states in India",
+  final List<String> _questions = [
+    "What is the number of states in India?",
     "Which is the first state to be formed on the basis of language?",
     "Which state was divided into Maharashtra and Gujarat in 1960?",
     "Which city was the summer capital of India during British Rule?"
@@ -23,7 +26,7 @@ class _MyAppState extends State<MyApp> {
   var _index = 0;
   void _changeQuestion() {
     setState(() {
-      if (_index == questions.length - 1) {
+      if (_index == _questions.length - 1) {
         _index = 0;
       } else {
         _index++;
@@ -52,48 +55,46 @@ class _MyAppState extends State<MyApp> {
           title: Text('QUIZmania'),
         ),
         body: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            title.Title(),
             Container(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-              margin: EdgeInsets.fromLTRB(5, 0, 5, 10),
-              child: RichText(
-                text: TextSpan(
-                  text: 'The Questions!',
-                  style: TextStyle(
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.blueGrey[200],
-                    height: 1.0,
-                  ),
+              child: Card(
+                elevation: 15.0,
+                color: Colors.blueGrey[400],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    question.Question(_questions[_index]),
+                    GridView.count(
+                      shrinkWrap: true,
+                      crossAxisCount: 2,
+                      childAspectRatio: 1.5,
+                      mainAxisSpacing: 25.0,
+                      crossAxisSpacing: 25.0,
+                      padding: EdgeInsets.all(25),
+                      children: <Widget>[
+                        RaisedButton(
+                          child: Text('14'),
+                          onPressed: _changeQuestion,
+                        ),
+                        RaisedButton(
+                          child: Text('27'),
+                          onPressed: null,
+                        ),
+                        RaisedButton(
+                          child: Text('29'),
+                          onPressed: null,
+                        ),
+                        RaisedButton(
+                          child: Text('None of the above'),
+                          onPressed: null,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            Card(
-              elevation: 15.0,
-              color: Colors.blueGrey[400],
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(questions[_index]),
-                  RaisedButton(
-                    child: Text('14'),
-                    onPressed: _changeQuestion,
-                  ),
-                  RaisedButton(
-                    child: Text('27'),
-                    onPressed: null,
-                  ),
-                  RaisedButton(
-                    child: Text('29'),
-                    onPressed: null,
-                  ),
-                  RaisedButton(
-                    child: Text('None of the above'),
-                    onPressed: null,
-                  ),
-                ],
               ),
             ),
           ],
