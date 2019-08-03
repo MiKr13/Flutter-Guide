@@ -6,6 +6,9 @@ import 'package:vibration/vibration.dart';
 
 class MyFooter extends StatelessWidget {
   // NOTE using 'new' keyword or not before every Widget class instantiation depends on us!
+  final Function themeChangeHandler;
+
+  MyFooter(this.themeChangeHandler);
 
   void vibrate() async {
     if (await Vibration.hasVibrator()) {
@@ -42,6 +45,15 @@ class MyFooter extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
+            FlatButton(
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.invert_colors),
+                  Text(' Change Theme'),
+                ],
+              ),
+              onPressed: () => themeChangeHandler(),
+            ),
             FlatButton(
               child: Row(
                 children: <Widget>[

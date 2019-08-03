@@ -32,6 +32,13 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  var _theme = Brightness.dark;
+  void _changeTheme() {
+    setState(() {
+      _theme = _theme == Brightness.dark ? Brightness.light : Brightness.dark;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // build() returns a so-called "widget tree" which tells Flutter what to draw onto the screen
@@ -39,12 +46,12 @@ class _MyAppState extends State<MyApp> {
       title: 'Flutter Demo',
       theme: ThemeData(
         // brightness: Brightness.light, // to enable dark theme by default instead of battery saver mode only
-        brightness: Brightness.dark,
+        brightness: _theme,
         // primaryColor: Colors.blue,
         primarySwatch: Colors.blue,
       ),
       darkTheme: ThemeData(
-        brightness: Brightness.dark,
+        brightness: _theme,
         // primaryColor: Colors.blue,
         primarySwatch: Colors.blue,
       ),
@@ -86,7 +93,7 @@ class _MyAppState extends State<MyApp> {
         ),
         bottomNavigationBar: BottomAppBar(
           clipBehavior: Clip.none,
-          child: footer.MyFooter(),
+          child: footer.MyFooter(_changeTheme),
         ),
       ),
     );
