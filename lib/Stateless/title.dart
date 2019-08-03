@@ -10,11 +10,11 @@ class Title extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(5, 0, 5, 10),
       child: RichText(
         text: TextSpan(
-          text: 'The Questions!',
+          text: 'The Questions',
           style: TextStyle(
             fontSize: 40.0,
             fontWeight: FontWeight.w600,
-            color: Colors.blueGrey[200],
+            color: Colors.cyan[700],
             height: 1.0,
           ),
         ),

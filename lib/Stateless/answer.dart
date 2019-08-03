@@ -15,7 +15,7 @@ class Answer extends StatelessWidget {
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
         textAlign: TextAlign.center,
       ),
-        onPressed: buttonPressHandler,
+        onPressed: () => buttonPressHandler(option),
       ),
     );
   }

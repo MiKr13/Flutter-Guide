@@ -48,11 +48,11 @@ class MyFooter extends StatelessWidget {
             FlatButton(
               child: Row(
                 children: <Widget>[
-                  Icon(Icons.invert_colors),
+                  Icon(Icons.compare),
                   Text(' Change Theme'),
                 ],
               ),
-              onPressed: () => themeChangeHandler(),
+              onPressed: themeChangeHandler,
             ),
             FlatButton(
               child: Row(
@@ -61,9 +61,7 @@ class MyFooter extends StatelessWidget {
                   Text(' Go Back'),
                 ],
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () => Navigator.of(context).pop(),
             ),
           ],
         );
@@ -75,9 +73,10 @@ class MyFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Card(
-        color: Color.fromRGBO(30, 144, 255, 0.1),
+        borderOnForeground: false,
         child: InkWell(
-          splashColor: Colors.black.withAlpha(20),
+          splashColor: Colors.black.withAlpha(25),
+          highlightColor: Colors.black.withAlpha(25),
           onLongPress: () {
             vibrate();
             _supportAuthor(context);

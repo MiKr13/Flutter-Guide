@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:flutter_guide/Stateless/title.dart' as title;
-import 'package:flutter_guide/Stateless/question.dart' as question;
+import 'package:flutter_guide/Stateless/question.dart' as questionSection;
 import 'package:flutter_guide/Stateless/answer.dart' as answer;
 import 'package:flutter_guide/Stateless/footer.dart' as footer;
 
@@ -14,15 +16,51 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final List<String> _questions = [
-    "What is the number of states in India?",
-    "Which is the first state to be formed on the basis of language?",
-    "Which state was divided into Maharashtra and Gujarat in 1960?",
-    "Which city was the summer capital of India during British Rule?"
+  final List<Map<String, Object>> _questions = [
+    {
+      'questionText': 'What is the number of states in India?',
+      'options': ['14', '27', '29', 'NA'],
+      'answer': '29'
+    },
+    {
+      'questionText':
+          'Which is the first state to be formed on the basis of language?',
+      'options': ['Andhra Pradesh', 'Bombay', 'Madhya Bharat', 'Meghalaya'],
+      'answer': 'Andhra Pradesh'
+    },
+    {
+      'questionText':
+          'Which state was divided into Maharashtra and Gujarat in 1960?',
+      'options': ['Bombay', 'Madras', 'Mysore', 'Hyderabad'],
+      'answer': 'Bombay'
+    },
+    {
+      'questionText':
+          'Which city was the summer capital of India during British Rule?',
+      'options': ['Ooty', 'Simla', 'Pachmarhi', 'Matheran'],
+      'answer': 'Simla'
+    }
   ];
 
+  void _showToast(String text) {
+    Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 1,
+        backgroundColor: Colors.blue[300],
+        textColor: Colors.white70,
+        fontSize: 19.0
+    );
+  }
+
   var _index = 0;
-  void _changeQuestion() {
+  void _checkAndChangeQuestion(String choice) {
+    if (choice == _questions[_index]['answer']) {
+      _showToast('Right Answer');
+    } else {
+      _showToast('Wrong Answer');
+    }
     setState(() {
       if (_index == _questions.length - 1) {
         _index = 0;
@@ -50,11 +88,6 @@ class _MyAppState extends State<MyApp> {
         // primaryColor: Colors.blue,
         primarySwatch: Colors.blue,
       ),
-      darkTheme: ThemeData(
-        brightness: _theme,
-        // primaryColor: Colors.blue,
-        primarySwatch: Colors.blue,
-      ),
       home: Scaffold(
         appBar: AppBar(
           title: Text('QUIZmania'),
@@ -65,11 +98,12 @@ class _MyAppState extends State<MyApp> {
             Container(
               child: Card(
                 elevation: 15.0,
-                color: Colors.blueGrey[400],
+                // color: Colors.blueGrey[400],
                 child: Column(
                   children: <Widget>[
                     Center(
-                      child: question.Question(_questions[_index]),
+                      child: questionSection.Question(
+                          _questions[_index]['questionText']),
                     ),
                     GridView.count(
                       shrinkWrap: true,
@@ -79,10 +113,10 @@ class _MyAppState extends State<MyApp> {
                       crossAxisSpacing: 25.0,
                       padding: EdgeInsets.all(25),
                       children: <Widget>[
-                        answer.Answer('14', _changeQuestion),
-                        answer.Answer('27', _changeQuestion),
-                        answer.Answer('29', _changeQuestion),
-                        answer.Answer('NA', _changeQuestion),
+                        ...(_questions[_index]['options'] as List<String>)
+                            .map((option) {
+                          return answer.Answer(option, _checkAndChangeQuestion);
+                        }).toList(), // ... spread is used to populate list elements into children os GridView.count
                       ],
                     ),
                   ],
