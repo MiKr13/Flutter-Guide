@@ -3,9 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:flutter_guide/Stateless/title.dart' as title;
-import 'package:flutter_guide/Stateless/question.dart' as questionSection;
-import 'package:flutter_guide/Stateless/answer.dart' as answer;
+import 'package:flutter_guide/Stateless/body.dart';
 import 'package:flutter_guide/Stateless/footer.dart' as footer;
 
 void main() => runApp(MyApp());
@@ -55,19 +53,15 @@ class _MyAppState extends State<MyApp> {
         fontSize: 19.0);
   }
 
-  var _index = 0;
+  var _index = 0, _correctCount = 0;
   void _checkAndChangeQuestion(String choice) {
     if (choice == _questions[_index]['answer']) {
       _showToast('Right Answer');
+      _correctCount++;
     } else {
       _showToast('Wrong Answer');
     }
     setState(() {
-      // if (_index == _questions.length - 1) {
-      //   _index = 0;
-      // } else {
-      //   _index++;
-      // }
       _index++;
     });
   }
@@ -75,6 +69,7 @@ class _MyAppState extends State<MyApp> {
   void _reset() {
     setState(() {
       _index = 0;
+      _correctCount = 0;
     });
   }
 
@@ -99,74 +94,8 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('QUIZmania'),
         ),
-        body: Column(
-          children: <Widget>[
-            title.Title(),
-            Container(
-              child: Card(
-                elevation: 15.0,
-                // color: Colors.blueGrey[400],
-                child: _index <= _questions.length - 1
-                    ? Column(
-                        children: <Widget>[
-                          Center(
-                            child: questionSection.Question(
-                                _questions[_index]['questionText']),
-                          ),
-                          GridView.count(
-                            shrinkWrap: true,
-                            crossAxisCount: 2,
-                            childAspectRatio: 1.5,
-                            mainAxisSpacing: 25.0,
-                            crossAxisSpacing: 25.0,
-                            padding: EdgeInsets.all(25),
-                            children: <Widget>[
-                              ...(_questions[_index]['options'] as List<String>)
-                                  .map((option) {
-                                return answer.Answer(
-                                    option, _checkAndChangeQuestion);
-                              }).toList(), // ... spread is used to populate list elements into children os GridView.count
-                            ],
-                          ),
-                        ],
-                      )
-                    : Column(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                            margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                            child: Text(
-                              'All Questions answered.\nYou did it!',
-                              style: TextStyle(
-                                fontSize: 55,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Container(
-                            width: 100,
-                            padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                            child: RaisedButton(
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(Icons.restore_page),
-                                  Text(' Reset'),
-                                ],
-                              ),
-                              onPressed: () => _reset(),
-                            ),
-                          ),
-                        ],
-                      ),
-              ),
-            ),
-          ],
-        ),
-        bottomNavigationBar: BottomAppBar(
-          clipBehavior: Clip.none,
-          child: footer.MyFooter(_changeTheme),
-        ),
+        body: Body(_questions, _index, _checkAndChangeQuestion, _reset, _correctCount),
+        bottomNavigationBar: footer.Footer(_changeTheme),
       ),
     );
   }

@@ -4,11 +4,11 @@ import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
 
-class MyFooter extends StatelessWidget {
+class Footer extends StatelessWidget {
   // NOTE using 'new' keyword or not before every Widget class instantiation depends on us!
   final Function themeChangeHandler;
 
-  MyFooter(this.themeChangeHandler);
+  Footer(this.themeChangeHandler);
 
   void vibrate() async {
     if (await Vibration.hasVibrator()) {
@@ -71,9 +71,10 @@ class MyFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Card(
-        borderOnForeground: false,
+    return BottomAppBar(
+      elevation: 30.0,
+      clipBehavior: Clip.none,
+      child: Container(
         child: InkWell(
           splashColor: Colors.black.withAlpha(25),
           highlightColor: Colors.black.withAlpha(25),
