@@ -7,7 +7,7 @@ class Result extends StatelessWidget {
   Result(this._reset, this._correctCount, this._total);
 
   String get resultPhrase {
-    return _correctCount / _total > 0.75 ? "You're the best 🎉" : "Try to do better next time"; 
+    return _correctCount == _total ? "You're the best 🎉" : "Try to do better next time"; 
   }
 
   @override

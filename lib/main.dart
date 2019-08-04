@@ -39,6 +39,74 @@ class _MyAppState extends State<MyApp> {
           'Which city was the summer capital of India during British Rule?',
       'options': ['Ooty', 'Simla', 'Pachmarhi', 'Matheran'],
       'answer': 'Simla'
+    },
+    {
+      'questionText': 'When was Burma was separated from India?',
+      'options': ['1948', '1901', '1937', '1945'],
+      'answer': '1937'
+    },
+    {
+      'questionText': 'When did India become a republic?',
+      'options': ['1935', '1947', '1950', '1961'],
+      'answer': '1950'
+    },
+    {
+      'questionText':
+          'Who was the Speaker of the Lok Sabha before he became the President of India?',
+      'options': [
+        'R. Venkataraman',
+        'A.P.J. Abdul Kalam',
+        'N. Sanjeeva Reddy',
+        'K. R. Narayanan'
+      ],
+      'answer': 'N. Sanjeeva Reddy'
+    },
+    {
+      'questionText':
+          'What was the age of Morarji Desai when he became the Prime Minister?',
+      'options': ['45', '56', '81', '96'],
+      'answer': '81'
+    },
+    {
+      'questionText': 'How was Tamil Nadu known?',
+      'options': ['Mysore', 'Madras', 'Bombay', 'Hyderabad'],
+      'answer': 'Madras'
+    },
+    {
+      'questionText': 'Which is the capital of Kerala',
+      'options': ['Calicut', 'Cochin', 'Ooty', 'Thiruvananthapuram'],
+      'answer': 'Thiruvananthapuram'
+    },
+    {
+      'questionText': 'Nagaland was separated from which state?',
+      'options': ['Orissa', 'Punjab', 'West Bengal', 'Assam'],
+      'answer': 'Assam'
+    },
+    {
+      'questionText': 'Which is the smallest state in terms of area?',
+      'options': ['Punjab', 'Sikkim', 'Goa', 'Tripura'],
+      'answer': 'Goa'
+    },
+    {
+      'questionText': 'Where is the tomb of Akbar?',
+      'options': ['Delhi', 'Sikandra', 'Lahore', 'Fatehpur Sikri'],
+      'answer': 'Sikandra'
+    },
+    {
+      'questionText':
+          'Which former Indian Prime Minister’s birthday is on December 25?',
+      'options': [
+        'Rajiv Gandhi',
+        'Atal Bihari Vajpayee',
+        'Lal Bahadur Shastri',
+        'P.V. Narasimha Roa'
+      ],
+      'answer': 'Atal Bihari Vajpayee'
+    },
+    {
+      'questionText': 'Which state was known as North East Frontier Agency?',
+      'options': ['Mizoram', 'Tripura', 'Manipur', 'Arunachal Pradesh'],
+      'answer': 'Arunachal Pradesh'
     }
   ];
 
@@ -94,7 +162,8 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('QUIZmania'),
         ),
-        body: Body(_questions, _index, _checkAndChangeQuestion, _reset, _correctCount),
+        body: Body(
+            _questions, _index, _checkAndChangeQuestion, _reset, _correctCount),
         bottomNavigationBar: footer.Footer(_changeTheme),
       ),
     );
