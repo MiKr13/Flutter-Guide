@@ -14,6 +14,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+  }
+
   // understand final vs const
   // static const List<Map<String, Object>> _questions = [ use static with const to satisfy Dart as it doesn't allows const at Class level or,
   static const List<Map<String, Object>> _questions = [
@@ -165,8 +173,8 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('QUIZmania'),
         ),
-        body: Body(
-            _shuffleQuestions, _index, _checkAndChangeQuestion, _reset, _correctCount),
+        body: Body(_shuffleQuestions, _index, _checkAndChangeQuestion, _reset,
+            _correctCount),
         bottomNavigationBar: footer.Footer(_changeTheme),
       ),
     );
