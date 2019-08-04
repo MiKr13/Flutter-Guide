@@ -55,7 +55,7 @@ class Result extends StatelessWidget {
             child: RaisedButton(
               child: Row(
                 children: <Widget>[
-                  Icon(Icons.restore_page),
+                  Icon(Icons.refresh),
                   Text(' Reset'),
                 ],
               ),
