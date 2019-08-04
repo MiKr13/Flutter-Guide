@@ -16,7 +16,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // understand final vs const
   // static const List<Map<String, Object>> _questions = [ use static with const to satisfy Dart as it doesn't allows const at Class level or,
-  final List<Map<String, Object>> _questions = const [
+  static const List<Map<String, Object>> _questions = [
     {
       'questionText': 'What is the number of states in India?',
       'options': ['14', '27', '29', 'NA'],
@@ -110,6 +110,8 @@ class _MyAppState extends State<MyApp> {
     }
   ];
 
+  var _shuffleQuestions = _questions.toList()..shuffle();
+
   void _showToast(String text) {
     Fluttertoast.showToast(
         msg: text,
@@ -123,7 +125,7 @@ class _MyAppState extends State<MyApp> {
 
   var _index = 0, _correctCount = 0;
   void _checkAndChangeQuestion(String choice) {
-    if (choice == _questions[_index]['answer']) {
+    if (choice == _shuffleQuestions[_index]['answer']) {
       _showToast('Right Answer');
       _correctCount++;
     } else {
@@ -138,6 +140,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _index = 0;
       _correctCount = 0;
+      _shuffleQuestions.shuffle();
     });
   }
 
@@ -163,7 +166,7 @@ class _MyAppState extends State<MyApp> {
           title: Text('QUIZmania'),
         ),
         body: Body(
-            _questions, _index, _checkAndChangeQuestion, _reset, _correctCount),
+            _shuffleQuestions, _index, _checkAndChangeQuestion, _reset, _correctCount),
         bottomNavigationBar: footer.Footer(_changeTheme),
       ),
     );
