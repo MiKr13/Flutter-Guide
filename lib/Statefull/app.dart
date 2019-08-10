@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -11,13 +10,6 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-  }
 
   // understand final vs const
   // static const List<Map<String, Object>> _questions = [ use static with const to satisfy Dart as it doesn't allows const at Class level or,

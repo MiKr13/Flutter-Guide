@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_guide/Stateless/footer.dart' as footer;
-import 'package:flutter_guide/Statefull/main.dart' as mainApp;
+import 'package:flutter_guide/Statefull/app.dart' as mainApp;
 
 void main() => runApp(Root());
 
@@ -14,6 +15,14 @@ class Root extends StatefulWidget {
 class _RootState extends State<Root> {
   var _theme = Brightness.dark;
 
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+  }
+
   void _changeTheme() {
     setState(() {
       _theme = _theme == Brightness.dark ? Brightness.light : Brightness.dark;
@@ -22,7 +31,6 @@ class _RootState extends State<Root> {
 
   @override
   Widget build(BuildContext context) {
-    // build() returns a so-called "widget tree" which tells Flutter what to draw onto the screen
     return MaterialApp(
       title: 'QUIZmania',
       theme: ThemeData(
