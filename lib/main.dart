@@ -15,24 +15,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // brightness: Brightness.light, // to enable dark theme by default instead of battery saver mode only
         brightness: Brightness.dark,
-        // primaryColor: Colors.blue,
         primarySwatch: Colors.blue,
       ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        // primaryColor: Colors.blue,
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Guide'),
+      home: MyHomePage(title: 'XpenseTracker'),
     );
   }
 }
 
 class MyFooter extends StatelessWidget {
-  // NOTE using 'new' keyword or not before every Widget class instantiation depends on us!
-  const MyFooter({Key key}) : super(key: key);
 
   void vibrate() async {
     if (await Vibration.hasVibrator()) {
@@ -105,7 +96,7 @@ class MyFooter extends StatelessWidget {
               //     Navigator.of(context).pop();
               //   },
               // ),
-              title: Text('Flutter Guide'),
+              title: Text('XpenseTracker'),
               subtitle: Text('This is created to learn flutter ASAP'),
               // trailing: Icon(Icons.code),
               trailing: FlatButton(
@@ -137,19 +128,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void _resetCounter() {
-    setState(() {
-      _counter = 0;
-    });
-  }
 
   void vibrate() async {
     if (await Vibration.hasVibrator()) {
@@ -164,45 +142,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Text(
-                "You have clicked add button this many times: ${_counter > 10 ? ' (Stop please!)' : ''}",
-              ),
-              RichText(
-                text: TextSpan(
-                  text: '$_counter',
-                  style: TextStyle(
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.blueGrey[200],
-                    height: 1.0,
-                  ),
-                  recognizer: LongPressGestureRecognizer()
-                    ..onLongPress = () {
-                      vibrate();
-                      _resetCounter();
-                    },
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+      body: Container(),
       bottomNavigationBar: BottomAppBar(
-        clipBehavior: Clip.none,
         child: MyFooter(),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-        highlightElevation: 2.0,
-      ),
+      floatingActionButton: FloatingActionButton(),
     );
   }
 }
