@@ -1,4 +1,4 @@
-# flutter_guide
+# XpenseTracker
 
 A Flutter project to play around with different kinds of widgets and themes.
 

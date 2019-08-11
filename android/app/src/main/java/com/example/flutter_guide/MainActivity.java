@@ -1,4 +1,4 @@
-package com.example.flutter_guide;
+package com.example.XpenseTracker;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
