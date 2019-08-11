@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyFooter extends StatelessWidget {
+class Footer extends StatelessWidget {
 
   void vibrate() async {
     if (await Vibration.hasVibrator()) {
@@ -31,7 +31,7 @@ class MyFooter extends StatelessWidget {
     }
   }
 
-  Future<void> _support(BuildContext context) async {
+  Future<void> _supportAuthor(BuildContext context) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -67,9 +67,7 @@ class MyFooter extends StatelessWidget {
                   Text(' Go Back'),
                 ],
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () => Navigator.of(context).pop(),
             ),
           ],
         );
@@ -79,26 +77,25 @@ class MyFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Card(
-        color: Color.fromRGBO(30, 144, 255, 0.1),
+    return BottomAppBar(
+      elevation: 30.0,
+      clipBehavior: Clip.none,
+      child: Container(
         child: InkWell(
-          splashColor: Colors.black.withAlpha(20),
+          splashColor: Colors.black.withAlpha(25),
+          highlightColor: Colors.black.withAlpha(25),
           onLongPress: () {
             vibrate();
-            _support(context);
+            _supportAuthor(context);
+          },
+          onDoubleTap: () {
+            vibrate();
+            _supportAuthor(context);
           },
           child: Container(
             child: ListTile(
-              // leading: FlatButton(
-              //   child: Icon(Icons.arrow_back),
-              //   onPressed: () {
-              //     Navigator.of(context).pop();
-              //   },
-              // ),
               title: Text('XpenseTracker'),
               subtitle: Text('This is created to learn flutter ASAP'),
-              // trailing: Icon(Icons.code),
               trailing: FlatButton(
                 child: Icon(Icons.developer_mode),
                 onPressed: () async {
@@ -117,6 +114,7 @@ class MyFooter extends StatelessWidget {
     );
   }
 }
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -144,9 +142,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(),
       bottomNavigationBar: BottomAppBar(
-        child: MyFooter(),
+        child: Footer(),
       ),
-      floatingActionButton: FloatingActionButton(),
+      floatingActionButton: FloatingActionButton(onPressed: null,),
     );
   }
 }
