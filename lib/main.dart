@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:flutter_guide/Stateless/footer.dart' as footer;
-import 'package:flutter_guide/Statefull/app.dart' as mainApp;
+import 'package:QUIZmania/Stateless/footer.dart' as footer;
+import 'package:QUIZmania/Statefull/app.dart' as mainApp;
 
 void main() => runApp(Root());
 

@@ -1,4 +1,4 @@
-# flutter_guide
+# QUIZmania
 
 A Flutter project to play around with different kinds of widgets and themes.
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:flutter_guide/Stateless/body.dart';
+import 'package:QUIZmania/Stateless/body.dart';
 
 class Main extends StatefulWidget {
   @override

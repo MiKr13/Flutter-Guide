@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_guide/Stateless/title.dart' as title;
-import 'package:flutter_guide/Stateless/quiz.dart';
-import 'package:flutter_guide/Stateless/result.dart';
+import 'package:QUIZmania/Stateless/title.dart' as title;
+import 'package:QUIZmania/Stateless/quiz.dart';
+import 'package:QUIZmania/Stateless/result.dart';
 
 class Body extends StatelessWidget {
   final List<Map<String, Object>> _questions;

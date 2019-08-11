@@ -1,4 +1,4 @@
-package com.example.flutter_guide;
+package com.example.QUIZmania;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
