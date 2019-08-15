@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:XpenseTracker/models/transaction.dart';
 import 'package:XpenseTracker/Stateless/footer.dart';
@@ -40,6 +41,40 @@ class MyHomePage extends StatelessWidget {
   final List<int> console = [1, 2, 3, 4, 5];
 
   MyHomePage(this.title, this._changeTheme);
+
+  Future<void> _addNew(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Author Credit'),
+          content: SingleChildScrollView(
+            child: Card(
+              child: Column(
+                children: <Widget>[
+                  TextField(),
+                  TextField(),
+                  TextField(),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.plus_one),
+                  Text('Submit'),
+                ],
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +126,6 @@ class MyHomePage extends StatelessWidget {
           Flexible(
             child: ListView(
               children: transactions.map((tx) {
-                var date = tx.date.toLocal().toString().split(" ");
                 return Card(
                   margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
                   child: Column(
@@ -135,7 +169,7 @@ class MyHomePage extends StatelessWidget {
                           ),
                         ),
                         subtitle: Text(
-                          '${tx.description}\nOn ${date[0]} at ${date[1].split(":")[0]}:${date[1].split(":")[1]}\nCost Per Item: ${tx.costPerItem}',
+                          '${tx.description}\nOn ${DateFormat.yMMMEd().add_jms().format(tx.date)}\nCost Per Item: ${tx.costPerItem}',
                           overflow: TextOverflow.fade,
                         ),
                         trailing: IconButton(
@@ -155,8 +189,17 @@ class MyHomePage extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         child: Footer(_changeTheme),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: null,
+      floatingActionButton: InkWell(
+        splashColor: Colors.black.withAlpha(25),
+        highlightColor: Colors.black.withAlpha(25),
+        onTap: () {
+          _addNew(context);
+        },
+        child: FloatingActionButton(
+          child: Icon(Icons.playlist_add),
+          tooltip: 'Add More',
+          onPressed: null,
+        ),
       ),
     );
   }
