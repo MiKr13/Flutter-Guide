@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
 import 'package:XpenseTracker/models/transaction.dart';
@@ -19,7 +21,7 @@ class MyHomePage extends StatelessWidget {
       date: DateTime.now(),
     ),
     Transaction(
-      id: 't1',
+      id: 't2',
       title: 'Hrx shoes',
       description: 'A new shoes for Friday party',
       count: 2,
@@ -28,7 +30,7 @@ class MyHomePage extends StatelessWidget {
       date: DateTime.now(),
     ),
     Transaction(
-      id: 't1',
+      id: 't3',
       title: 'Hrx shoes',
       description: 'A new shoes for Friday party',
       count: 2,
@@ -37,8 +39,12 @@ class MyHomePage extends StatelessWidget {
       date: DateTime.now(),
     ),
   ];
-
-  final List<int> console = [1, 2, 3, 4, 5];
+  final List<int> console = [1, 2, 3, 4, 5, 6, 7];
+  String titleInp;
+  String descriotionInp;
+  int countInp;
+  int costPerItemInp;
+  DateTime dateInp;
 
   MyHomePage(this.title, this._changeTheme);
 
@@ -48,16 +54,126 @@ class MyHomePage extends StatelessWidget {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Author Credit'),
+          title: Text('Add Transactions'),
           content: SingleChildScrollView(
-            child: Card(
-              child: Column(
-                children: <Widget>[
-                  TextField(),
-                  TextField(),
-                  TextField(),
-                ],
-              ),
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  autofocus: true,
+                  inputFormatters: [
+                    WhitelistingTextInputFormatter(RegExp(
+                        "(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]|[0-9A-Za-z])")),
+                  ],
+                  textCapitalization: TextCapitalization.words,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    hintText: 'Woodland Wallet',
+                    labelText: 'Name of item',
+                  ),
+                  onChanged: (String value) {
+                    titleInp = value;
+                  },
+                ),
+                TextField(
+                  inputFormatters: [
+                    WhitelistingTextInputFormatter(RegExp(
+                        "(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]|[0-9A-Za-z,.])")),
+                  ],
+                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    hintText: 'A new wallet for Dad',
+                    labelText: 'Description/Usage of item',
+                  ),
+                  onChanged: (String value) {
+                    descriotionInp = value;
+                  },
+                ),
+                TextField(
+                  inputFormatters: [
+                    WhitelistingTextInputFormatter(RegExp("[0-9]")),
+                  ],
+                  keyboardType: TextInputType.numberWithOptions(
+                    signed: false,
+                    decimal: false,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: '2',
+                    labelText: 'Number of item bought',
+                  ),
+                  onChanged: (String value) {
+                    countInp = int.parse(value);
+                  },
+                ),
+                TextField(
+                  inputFormatters: [
+                    WhitelistingTextInputFormatter(RegExp("[0-9.]")),
+                  ],
+                  keyboardType: TextInputType.numberWithOptions(
+                    signed: false,
+                    decimal: true,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: '1200',
+                    labelText: 'Cost per Item',
+                  ),
+                  onChanged: (String value) {
+                    costPerItemInp = int.parse(value);
+                  },
+                ),
+                // TextField(
+                //   keyboardType: TextInputType.datetime,
+                //   decoration: InputDecoration(
+                //     labelText: 'Pick the date and time',
+                //   ),
+                //   onTap: () {
+                //     var date = showDatePicker(
+                //       context: context,
+                //       initialDate: DateTime.now(),
+                //       firstDate: DateTime.now().subtract(Duration(days: 7)),
+                //       lastDate: DateTime.now().add(Duration(hours: 1)),
+                //     );
+                //     var time = showTimePicker(
+                //       context: context,
+                //       initialTime: TimeOfDay(
+                //         hour: 0, minute: 0,
+                //       ),
+                //     );
+
+                //   },
+                //   onChanged: (String value) {
+                //     dateInp = DateTime.parse(value);
+                //     print(dateInp);
+                //   },
+                // ),
+                FlatButton(
+                  padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                  onPressed: () {
+                    DatePicker.showDatePicker(
+                      context,
+                      showTitleActions: true,
+                      minTime: DateTime.now().subtract(
+                        Duration(
+                          days: 7,
+                        ),
+                      ),
+                      maxTime: DateTime.now(),
+                      onChanged: (date) {
+                        print('change $date');
+                      },
+                      onConfirm: (date) {
+                        print('confirm $date');
+                      },
+                      currentTime: DateTime.now(),
+                      locale: LocaleType.en,
+                    );
+                  },
+                  child: Text(
+                    'Date & Time',
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                ),
+              ],
             ),
           ),
           actions: <Widget>[
